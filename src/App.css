@@ -12,4 +12,13 @@
   height: 70px;
   padding: 10px;
   color: white;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+}
+
+.App-body {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
 }

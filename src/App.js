@@ -15,13 +15,15 @@ class App extends Component {
             alt=""
           />
           <h1>Daily Fantasy Football Lineup Generator</h1>
+        </div>
+        <section className="App-body">
           <div>
             <UploadForm />
           </div>
           <div>
             <LineupTable />
           </div>
-        </div>
+        </section>
       </div>
     );
   }

@@ -11,6 +11,7 @@ body {
   background-color: #C5C4C4;
   color: #7C7C7C;
   border: 3px solid black;
+  order: 2;
 }
 
 .player-row {
@@ -24,5 +25,8 @@ body {
 .upload-form {
   float: left;
   margin-top: 20px;
+  margin-left: 20px;
+  margin-right: 20px;
   border: 1px solid black;
+  order: 1;
 }

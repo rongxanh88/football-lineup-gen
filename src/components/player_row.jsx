@@ -12,10 +12,10 @@ class PlayerRow extends Component {
   render() {
     return (
       <tr className="player-row">
-        <td className="player-detail">{player.position}</td>
-        <td className="player-detail">{player.full_name}</td>
-        <td className="player-detail">{player.expected_point_production}</td>
-        <td className="player-detail">{player.salary}</td>
+        <td height="50" className="player-detail">{player.position}</td>
+        <td height="50" className="player-detail">{player.full_name}</td>
+        <td height="50" className="player-detail">{player.expected_point_production}</td>
+        <td height="50" className="player-detail">{player.salary}</td>
       </tr>
     )
   }
