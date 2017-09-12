@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-//import CSS
-
 import axios from 'axios';
 
 class UploadForm extends Component {
@@ -18,16 +16,14 @@ class UploadForm extends Component {
 
   handleSubmit(event) {
     const form = document.getElementById('form');
-    let formData = new FormData(form);
-
-    const postUrl = 'https://fantasy-football-api-1703.herokuapp.com/api/v1/salaries';
-    axios.post(postUrl, formData)
-      .then((data) => {
-        console.log(data);
-      })
-      .catch((error) => {
-        console.log(error);
-      })
+    if (validateFile(form[1].value)) {
+      const formData = new FormData(form);
+      const postUrl = 'https://fantasy-football-api-1703.herokuapp.com/api/v1/salaries';
+      
+      axios.post(postUrl, formData)
+        .then(data => console.log(data))
+        .catch(error => console.log(error))
+    }
     event.preventDefault();
   }
 
@@ -39,6 +35,22 @@ class UploadForm extends Component {
         <input type="submit" value="Upload File"/>
       </form>
     );
+  }
+}
+
+const validateFile = (inputFile) => {
+  const extErrorMessage = "Only image file with extension: .csv is allowed";
+  const allowedExtension = "csv";
+  const extName = inputFile.split('.').pop();
+  let extError = false;
+
+  if (extName !== allowedExtension) {extError = true;};
+
+  if (extError) {
+    window.alert(extErrorMessage);
+    return false;
+  } else {
+    return true;
   }
 }
 

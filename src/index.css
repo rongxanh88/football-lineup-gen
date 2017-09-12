@@ -7,11 +7,9 @@ body {
 .lineup-table {
   margin-top: 20px;
   padding: 20px;
-  /* float: right; */
   background-color: #C5C4C4;
   color: #7C7C7C;
   border: 3px solid black;
-  /* order: 2; */
 }
 
 .player-row {
@@ -20,10 +18,10 @@ body {
   background-color: white;
   color: grey;
   border: 1px solid grey;
+  overflow-y: scroll;
 }
 
 .upload-form {
-  /* float: left; */
   margin: 20px;
   border: 1px solid black;
   order: 1;
@@ -42,4 +40,5 @@ body {
 .available {
   display: flex;
   flex-direction: column;
+  /* height: 100vh; */
 }
