@@ -3,3 +3,26 @@ body {
   padding: 0;
   font-family: sans-serif;
 }
+
+.lineup-table {
+  margin-top: 20px;
+  padding: 20px;
+  float: right;
+  background-color: #C5C4C4;
+  color: #7C7C7C;
+  border: 3px solid black;
+}
+
+.player-row {
+  padding-top: 20px;
+  padding-bottom: 20px;
+  background-color: white;
+  color: grey;
+  border: 1px solid grey;
+}
+
+.upload-form {
+  float: left;
+  margin-top: 20px;
+  border: 1px solid black;
+}
