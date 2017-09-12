@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 
-import LineupTable from './components/table.jsx'
+import Table from './components/table.jsx'
 import UploadForm from './components/upload_form.jsx'
 
 class App extends Component {
@@ -17,11 +17,14 @@ class App extends Component {
           <h1>Daily Fantasy Football Lineup Generator</h1>
         </div>
         <section className="App-body">
-          <div>
+          <div class="available">
             <UploadForm />
+            <h3>All Available Players</h3>
+            <Table id="available-players" />
           </div>
           <div>
-            <LineupTable />
+            <h3>Generated Lineup</h3>
+            <Table id="generated-lineup" />
           </div>
         </section>
       </div>

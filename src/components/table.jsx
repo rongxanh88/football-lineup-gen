@@ -4,10 +4,14 @@ import React, { Component } from 'react';
 import TableHeader from './table_header'
 import PlayerRow from './player_row'
 
-class LineupTable extends Component {
+class Table extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {id: props["id"]}
+  }
   render() {
     return (
-      <table className="lineup-table">
+      <table className="lineup-table" id={this.state.id}>
         <thead>
           <TableHeader />
         </thead>
@@ -27,4 +31,4 @@ class LineupTable extends Component {
   }
 }
 
-export default LineupTable;
+export default Table;

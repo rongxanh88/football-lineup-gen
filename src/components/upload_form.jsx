@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 //import CSS
 
+import axios from 'axios';
+
 class UploadForm extends Component {
   constructor(props) {
     super(props);
@@ -15,15 +17,23 @@ class UploadForm extends Component {
   }
 
   handleSubmit(event) {
-    // alert('A name was submitted: ' + this.state.value);
-    //make post api call here
-    debugger
+    const form = document.getElementById('form');
+    let formData = new FormData(form);
+
+    const postUrl = 'https://fantasy-football-api-1703.herokuapp.com/api/v1/salaries';
+    axios.post(postUrl, formData)
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((error) => {
+        console.log(error);
+      })
     event.preventDefault();
   }
 
   render() {
     return (
-      <form className="upload-form" onSubmit={this.handleSubmit} method="post" encType="multipart/form-data">
+      <form id="form" className="upload-form" onSubmit={this.handleSubmit} method="post" encType="multipart/form-data">
         <input type="text" value={this.state.value} onChange={this.handleChange} />
         <input type="file" name="salaryData" id="fileToUpload" value={this.state.value} onChange={this.handleChange} />
         <input type="submit" value="Upload File"/>
