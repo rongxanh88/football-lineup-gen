@@ -8,23 +8,33 @@ import UploadForm from './components/upload_form.jsx';
 class App extends Component {
   constructor(props) {
     super(props);
+    this.state = { players: [] }
+    this.setAllPlayers = this.setAllPlayers.bind(this)
+  }
 
+  componentDidMount() {
+    this.getAllPlayers()
+  }
+  
+  getAllPlayers() {
     Promise.all([
-      getPlayers('quarterbacks'),
-      getPlayers('runningbacks'),
-      getPlayers('receivers'),
-      getPlayers('tightends')
-    ])
-    .then((allData) => {
-      let quarterbacks = allData[0].quarterbacks
-      let runningbacks = allData[1].runningbacks
-      let receivers    = allData[2].receivers
-      let tightends    = allData[3].tightends
-      this.state = { quarterbacks: quarterbacks.map(createPlayer)}
-      this.state = { runningbacks: runningbacks.map(createPlayer)}
-      this.state = { receivers: receivers.map(createPlayer)}
-      this.state = { tightends: tightends.map(createPlayer)}
-    })
+       getPlayers('quarterbacks'),
+       getPlayers('runningbacks'),
+       getPlayers('receivers'),
+       getPlayers('tightends')
+     ])
+     .then((allData) => {
+       const quarterbacks = allData[0].quarterbacks
+       const runningbacks = allData[1].runningbacks
+       const receivers    = allData[2].receivers
+       const tightends    = allData[3].tightends
+       const allPlayers   = quarterbacks.concat(runningbacks, receivers, tightends)
+       this.setAllPlayers(allPlayers.map(createPlayer))
+     })
+  }
+
+  setAllPlayers(allPlayers) {
+    this.setState({ player: allPlayers })
   }
 
   render() {
@@ -42,11 +52,16 @@ class App extends Component {
           <div className="available">
             <UploadForm />
             <h3>All Available Players</h3>
-            <Table id="available-players" />
+            <Table
+              id="available-players"
+              players={this.state.players}
+              />
           </div>
           <div>
             <h3>Generated Lineup</h3>
-            <Table id="generated-lineup" />
+            <Table id="generated-lineup"
+            players={this.state.players}
+            />
           </div>
         </section>
       </div>

@@ -9,26 +9,46 @@ class Table extends Component {
     super(props);
     this.state = {id: props["id"]}
   }
+
+  // render() {
+  //   return (
+  //     <table className="lineup-table" id={this.state.id}>
+  //       <thead>
+  //         <TableHeader />
+  //       </thead>
+  //       <tbody>
+  //         <PlayerRow />
+  //         <PlayerRow />
+  //         <PlayerRow />
+  //         <PlayerRow />
+  //         <PlayerRow />
+  //         <PlayerRow />
+  //         <PlayerRow />
+  //         <PlayerRow />
+  //         <PlayerRow />
+  //       </tbody>
+  //     </table>
+  //   )
+  // }
+
   render() {
-    return (
-      <table className="lineup-table" id={this.state.id}>
-        <thead>
-          <TableHeader />
-        </thead>
-        <tbody>
-          <PlayerRow />
-          <PlayerRow />
-          <PlayerRow />
-          <PlayerRow />
-          <PlayerRow />
-          <PlayerRow />
-          <PlayerRow />
-          <PlayerRow />
-          <PlayerRow />
-        </tbody>
-      </table>
-    )
+      return (
+        <table className="lineup-table" id={this.state.id}>
+          <thead>
+            <TableHeader />
+          </thead>
+          <tbody>
+            {this.props.players.map(playerToHTML)}
+          </tbody>
+        </table>
+      )
   }
+}
+
+const playerToHTML = (player) => {
+  return <PlayerRow
+      
+    />
 }
 
 export default Table;
