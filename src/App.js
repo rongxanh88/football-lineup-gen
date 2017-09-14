@@ -8,12 +8,17 @@ import UploadForm from './components/upload_form.jsx';
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = { players: [] }
+    this.state = {
+      players: [],
+      defenses: []
+    }
     this.setAllPlayers = this.setAllPlayers.bind(this)
+    this.setDefenses   = this.setDefenses.bind(this)
   }
 
   componentDidMount() {
     this.getAllPlayers()
+    this.getDefenses()
   }
   
   getAllPlayers() {
@@ -33,6 +38,15 @@ class App extends Component {
      })
   }
 
+  getDefenses() {
+    getPlayers('defenses')
+      .then(data => this.setDefenses(data.defenses))
+  }
+
+  setDefenses(defenses) {
+    this.setState({ defenses: defenses })
+  }
+
   setAllPlayers(allPlayers) {
     this.setState({ players: allPlayers })
   }
@@ -50,14 +64,19 @@ class App extends Component {
         </div>
         <section className="App-body">
           <div className="available">
-            <UploadForm />
-            <h3>All Available Players</h3>
+            <h3 id="header-players">All Available Players</h3>
             <Table
               id="available-players"
               players={this.state.players}
-              />
+            />
+            <h3 id="header-defenses">All Available Defenses</h3>
+            <Table
+              id="available-defenses"
+              players={this.state.defenses}
+            />
           </div>
           <div>
+            <UploadForm />
             <h3>Generated Lineup</h3>
             <Table id="generated-lineup"
             players={[]}

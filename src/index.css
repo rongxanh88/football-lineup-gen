@@ -37,9 +37,23 @@ body {
   height: 70vh;
 }
 
+#available-defenses {
+  order: 4;
+  margin: 20px;
+  height: 70vh;
+}
+
 .available {
   display: flex;
   flex-direction: column;
+}
+
+#header-players {
+  order: 1;
+}
+
+#header-defenses {
+  order: 3;
 }
 
 tbody {
@@ -48,4 +62,8 @@ tbody {
   flex-wrap: nowrap;
   overflow-y: scroll;
   height: 100%;
+}
+
+thead {
+  display: flex;
 }
