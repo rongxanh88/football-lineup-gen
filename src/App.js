@@ -58,94 +58,148 @@ class App extends Component {
     const salaryCap = 50000
     let highestProduction = 0
     let bestLineup = []
+    let numberOfOperations = 0
 
     let quarterbacks = this.state.players.filter(player => player.position === "QB")
                                          .sort((playerA, playerB) => {
                                            return parseFloat(playerB.expected_point_production) - parseFloat(playerA.expected_point_production)
-                                         }).slice(0,10)
+                                         }).slice(0,5)
 
     let runningbacks = this.state.players.filter(player => player.position === "RB")
                                          .sort((playerA, playerB) => {
                                            return parseFloat(playerB.expected_point_production) - parseFloat(playerA.expected_point_production)
-                                         }).slice(0,10)
+                                         }).slice(0,5)
 
     let receivers = this.state.players.filter(player => player.position === "WR")
                                       .sort((playerA, playerB) => {
                                         return parseFloat(playerB.expected_point_production) - parseFloat(playerA.expected_point_production)
-                                      }).slice(0,10)
+                                      }).slice(0,5)
 
     let tightends = this.state.players.filter(player => player.position === "TE")
                                       .sort((playerA, playerB) => {
                                         return parseFloat(playerB.expected_point_production) - parseFloat(playerA.expected_point_production)
-                                      }).slice(0,10)
+                                      }).slice(0,5)
 
     let defenses = this.state.defenses.sort((defenseA, defenseB) => {
                                         return parseFloat(defenseB.expected_point_production) - parseFloat(defenseA.expected_point_production)
-                                      }).slice(0,10)
+                                      }).slice(0,5)
 
     quarterbacks.forEach(quarterback => {
       let pointTotal = 0
       let salaryTotal = 0
       let lineup = []
 
-      pointTotal += quarterback.expected_point_production
-      salaryTotal += quarterback.salary
+      pointTotal += parseFloat(quarterback.expected_point_production)
+      salaryTotal += parseFloat(quarterback.salary)
       lineup.push(quarterback)
-      debugger
-      //two runningbacks
+
       runningbacks.forEach(rb1 => {
-        pointTotal += rb1.expected_point_production
-        salaryTotal += rb1.salary
-        lineup.push(rb1)
+        let pointTotal1 = pointTotal
+        let salaryTotal1 = salaryTotal
+        let lineup1 = lineup.slice()
+        
+        pointTotal1 += parseFloat(rb1.expected_point_production)
+        salaryTotal1 += parseFloat(rb1.salary)
+        lineup1.push(rb1)
 
         const secondRunningbacks = runningbacks.filter(rb2 => rb2 !== rb1)
         secondRunningbacks.forEach(rb2 => {
-          pointTotal += rb2.expected_point_production
-          salaryTotal += rb2.salary
-          lineup.push(rb2)
+          let pointTotal2 = pointTotal1
+          let salaryTotal2 = salaryTotal1
+          let lineup2 = lineup1.slice()
+
+          pointTotal2 += parseFloat(rb2.expected_point_production)
+          salaryTotal2 += parseFloat(rb2.salary)
+          lineup2.push(rb2)
 
           receivers.forEach(wr1 => {
-            pointTotal += wr1.expected_point_production
-            salaryTotal += wr1.salary
-            lineup.push(wr1)
+            let pointTotal3 = pointTotal2
+            let salaryTotal3 = salaryTotal2
+            let lineup3 = lineup2.slice()
+
+            pointTotal3 += parseFloat(wr1.expected_point_production)
+            salaryTotal3 += parseFloat(wr1.salary)
+            lineup3.push(wr1)
 
             const secondReceivers = receivers.filter(wr2 => wr2 !== wr1)
             secondReceivers.forEach(wr2 => {
-              pointTotal += wr2.expected_point_production
-              salaryTotal += wr2.salary
-              lineup.push(wr2)
+              let pointTotal4 = pointTotal3
+              let salaryTotal4 = salaryTotal3
+              let lineup4 = lineup3.slice()
+
+              pointTotal4 += parseFloat(wr2.expected_point_production)
+              salaryTotal4 += parseFloat(wr2.salary)
+              lineup4.push(wr2)
 
               const thirdReceivers = receivers.filter(wr3 => (wr3 !== wr2) && (wr3 !== wr1))
               thirdReceivers.forEach(wr3 => {
-                pointTotal += wr3.expected_point_production
-                salaryTotal += wr3.salary
-                lineup.push(wr3)
+                let pointTotal5 = pointTotal4
+                let salaryTotal5  = salaryTotal4
+                let lineup5 = lineup4.slice()
 
-                tightends.forEach(te => {
-                  pointTotal += te.expected_point_production
-                  salaryTotal += te.salary
-                  lineup.push(te)
+                pointTotal5 += parseFloat(wr3.expected_point_production)
+                salaryTotal5 += parseFloat(wr3.salary)
+                lineup5.push(wr3)
 
-                  defenses.forEach(defense => {
-                    pointTotal += defense.expected_point_production
-                    salaryTotal += defense.salary
-                    lineup.push(defense)
+                for(let i = 0; i < tightends.length; i++) {
+                  const te = tightends[i]
 
-                    if (salaryTotal > salaryCap) {
-                      //dont do anything
-                    } else if (pointTotal > highestProduction) {
-                      highestProduction = pointTotal
-                      bestLineup = lineup
+                  let pointTotal6 = pointTotal5
+                  let salaryTotal6 = salaryTotal5
+                  let lineup6 = lineup5.slice()
+
+                  pointTotal6 += parseFloat(te.expected_point_production)
+                  salaryTotal6 += parseFloat(te.salary)
+                  lineup6.push(te)
+
+                  if (salaryTotal6 > salaryCap) {
+                    continue
+                  }
+
+                  for(let j = 0; j < defenses.length; j++) {
+                    const defense = defenses[j]
+                    let pointTotal7 = pointTotal6
+                    let salaryTotal7 = salaryTotal6
+                    let lineup7 = lineup6.slice()
+                    
+                    pointTotal7 += parseFloat(defense.expected_point_production)
+                    salaryTotal7 += parseFloat(defense.salary)
+                    lineup7.push(defense)
+
+                    if (salaryTotal7 > salaryCap) {
+                      continue
                     }
-                  })
-                })
+                    const secondTightends = tightends.filter(te2 => te2 !== te)
+                    const flexPos = secondRunningbacks.concat(thirdReceivers, secondTightends)
+
+                    for(let k = 0; k < flexPos.length; k++) {
+                      const player = flexPos[k]
+                      let pointTotal8 = pointTotal7
+                      let salaryTotal8 = salaryTotal7
+                      let lineup8 = lineup7.slice()
+
+                      pointTotal8 += parseFloat(player.expected_point_production)
+                      salaryTotal8 += parseFloat(player.salary)
+                      lineup8.push(player)
+
+                      numberOfOperations++
+
+                      if (salaryTotal8 > salaryCap) {
+                        continue
+                      } else if (pointTotal8 > highestProduction) {
+                        highestProduction = pointTotal8
+                        bestLineup = lineup8
+                      }
+                    }
+                  }
+                }
               })
             })
           })
         })
       })
-    })                                      
-    debugger
+    })
+    this.setState({lineup: bestLineup})
   }
 
   render() {
@@ -178,7 +232,7 @@ class App extends Component {
             {/* <Button id="gen-button" text="Generate Lineup" /> */}
             <h3 id="header-gen-lineups">Generated Lineup</h3>
             <Table id="generated-lineup"
-            players={[]}
+            players={this.state.lineup}
             />
           </div>
         </section>
