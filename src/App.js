@@ -29,12 +29,12 @@ class App extends Component {
        const receivers    = allData[2].receivers
        const tightends    = allData[3].tightends
        const allPlayers   = quarterbacks.concat(runningbacks, receivers, tightends)
-       this.setAllPlayers(allPlayers.map(createPlayer))
+       this.setAllPlayers(allPlayers)
      })
   }
 
   setAllPlayers(allPlayers) {
-    this.setState({ player: allPlayers })
+    this.setState({ players: allPlayers })
   }
 
   render() {
@@ -50,7 +50,7 @@ class App extends Component {
         </div>
         <section className="App-body">
           <div className="available">
-            <UploadForm />
+            {/* <UploadForm /> */}
             <h3>All Available Players</h3>
             <Table
               id="available-players"
@@ -60,7 +60,7 @@ class App extends Component {
           <div>
             <h3>Generated Lineup</h3>
             <Table id="generated-lineup"
-            players={this.state.players}
+            players={[]}
             />
           </div>
         </section>
@@ -75,20 +75,6 @@ const getPlayers = (position) => {
   return axios.get(baseURL + `/api/v1/${position}.json`)
     .then(response => response.data)
     .catch(error => console.log(error))
-}
-
-const createPlayer = (player) => {
-  return new Player(player);
-}
-
-class Player {
-  constructor(attrs) {
-    this.firstName = attrs["first_name"]
-    this.lastName  = attrs["last_name"]
-    this.position  = attrs["position"]
-    this.salary    = attrs["salary"]
-    this.expectedPoints = attrs["expected_point_production"]
-  }
 }
 
 export default App;
