@@ -20,7 +20,7 @@ class Table extends Component {
 
 const toPlayerRow = (player)  => {
   return (
-    <PlayerRow data={player}/>
+    <PlayerRow key={player.id} data={player}/>
   )
 }
 
