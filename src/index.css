@@ -27,7 +27,7 @@ body {
 }
 
 #generated-lineup {
-  order:  2;
+  order:  4;
   margin-right: 20px;
 }
 
@@ -56,6 +56,10 @@ body {
   order: 3;
 }
 
+#header-gen-lineups {
+  order: 3;
+}
+
 tbody {
   display: flex;
   flex-direction: column;
@@ -66,4 +70,13 @@ tbody {
 
 thead {
   display: flex;
+}
+
+.Dynamic-Lineup {
+  display: flex;
+  flex-direction: column;
+}
+
+#gen-button {
+  order: 2;
 }

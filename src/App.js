@@ -1,13 +1,14 @@
-import React, { Component } from 'react';
-import axios from 'axios';
-import './App.css';
+import React, { Component } from 'react'
+import axios from 'axios'
+import './App.css'
 
-import Table from './components/table.jsx';
-import UploadForm from './components/upload_form.jsx';
+import Table from './components/table.jsx'
+import UploadForm from './components/upload_form.jsx'
+import Button from './components/gen_lineup.jsx'
 
 class App extends Component {
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
       players: [],
       defenses: []
@@ -75,9 +76,10 @@ class App extends Component {
               players={this.state.defenses}
             />
           </div>
-          <div>
+          <div className="Dynamic-Lineup">
             <UploadForm />
-            <h3>Generated Lineup</h3>
+            <Button id="gen-button" text="Generate Lineup" />
+            <h3 id="header-gen-lineups">Generated Lineup</h3>
             <Table id="generated-lineup"
             players={[]}
             />
