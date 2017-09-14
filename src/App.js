@@ -4,17 +4,19 @@ import './App.css'
 
 import Table from './components/table.jsx'
 import UploadForm from './components/upload_form.jsx'
-import Button from './components/gen_lineup.jsx'
+// import Button from './components/gen_lineup.jsx'
 
 class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
       players: [],
-      defenses: []
+      defenses: [],
+      lineup: []
     }
     this.setAllPlayers = this.setAllPlayers.bind(this)
     this.setDefenses   = this.setDefenses.bind(this)
+    this.genLineup     = this.genLineup.bind(this)
   }
 
   componentDidMount() {
@@ -52,6 +54,100 @@ class App extends Component {
     this.setState({ players: allPlayers })
   }
 
+  genLineup() {
+    const salaryCap = 50000
+    let highestProduction = 0
+    let bestLineup = []
+
+    let quarterbacks = this.state.players.filter(player => player.position === "QB")
+                                         .sort((playerA, playerB) => {
+                                           return parseFloat(playerB.expected_point_production) - parseFloat(playerA.expected_point_production)
+                                         }).slice(0,10)
+
+    let runningbacks = this.state.players.filter(player => player.position === "RB")
+                                         .sort((playerA, playerB) => {
+                                           return parseFloat(playerB.expected_point_production) - parseFloat(playerA.expected_point_production)
+                                         }).slice(0,10)
+
+    let receivers = this.state.players.filter(player => player.position === "WR")
+                                      .sort((playerA, playerB) => {
+                                        return parseFloat(playerB.expected_point_production) - parseFloat(playerA.expected_point_production)
+                                      }).slice(0,10)
+
+    let tightends = this.state.players.filter(player => player.position === "TE")
+                                      .sort((playerA, playerB) => {
+                                        return parseFloat(playerB.expected_point_production) - parseFloat(playerA.expected_point_production)
+                                      }).slice(0,10)
+
+    let defenses = this.state.defenses.sort((defenseA, defenseB) => {
+                                        return parseFloat(defenseB.expected_point_production) - parseFloat(defenseA.expected_point_production)
+                                      }).slice(0,10)
+
+    quarterbacks.forEach(quarterback => {
+      let pointTotal = 0
+      let salaryTotal = 0
+      let lineup = []
+
+      pointTotal += quarterback.expected_point_production
+      salaryTotal += quarterback.salary
+      lineup.push(quarterback)
+      debugger
+      //two runningbacks
+      runningbacks.forEach(rb1 => {
+        pointTotal += rb1.expected_point_production
+        salaryTotal += rb1.salary
+        lineup.push(rb1)
+
+        const secondRunningbacks = runningbacks.filter(rb2 => rb2 !== rb1)
+        secondRunningbacks.forEach(rb2 => {
+          pointTotal += rb2.expected_point_production
+          salaryTotal += rb2.salary
+          lineup.push(rb2)
+
+          receivers.forEach(wr1 => {
+            pointTotal += wr1.expected_point_production
+            salaryTotal += wr1.salary
+            lineup.push(wr1)
+
+            const secondReceivers = receivers.filter(wr2 => wr2 !== wr1)
+            secondReceivers.forEach(wr2 => {
+              pointTotal += wr2.expected_point_production
+              salaryTotal += wr2.salary
+              lineup.push(wr2)
+
+              const thirdReceivers = receivers.filter(wr3 => (wr3 !== wr2) && (wr3 !== wr1))
+              thirdReceivers.forEach(wr3 => {
+                pointTotal += wr3.expected_point_production
+                salaryTotal += wr3.salary
+                lineup.push(wr3)
+
+                tightends.forEach(te => {
+                  pointTotal += te.expected_point_production
+                  salaryTotal += te.salary
+                  lineup.push(te)
+
+                  defenses.forEach(defense => {
+                    pointTotal += defense.expected_point_production
+                    salaryTotal += defense.salary
+                    lineup.push(defense)
+
+                    if (salaryTotal > salaryCap) {
+                      //dont do anything
+                    } else if (pointTotal > highestProduction) {
+                      highestProduction = pointTotal
+                      bestLineup = lineup
+                    }
+                  })
+                })
+              })
+            })
+          })
+        })
+      })
+    })                                      
+    debugger
+  }
+
   render() {
     return (
       <div className="App">
@@ -78,7 +174,8 @@ class App extends Component {
           </div>
           <div className="Dynamic-Lineup">
             <UploadForm />
-            <Button id="gen-button" text="Generate Lineup" />
+            <button type="button" id="header-gen-lineups" onClick={this.genLineup}>Generate Lineup</button>
+            {/* <Button id="gen-button" text="Generate Lineup" /> */}
             <h3 id="header-gen-lineups">Generated Lineup</h3>
             <Table id="generated-lineup"
             players={[]}
