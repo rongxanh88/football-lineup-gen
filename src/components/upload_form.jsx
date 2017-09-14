@@ -1,30 +1,30 @@
-import React, { Component } from 'react';
-import axios from 'axios';
+import React, { Component } from 'react'
+import axios from 'axios'
 
 class UploadForm extends Component {
   constructor(props) {
-    super(props);
-    this.state = {value: 'CSV Filepath'};
+    super(props)
+    this.state = {value: ''}
 
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleChange = this.handleChange.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
   }
 
   handleChange(event) {
-    this.setState({value: event.target.value});
+    this.setState({value: event.target.value})
   }
 
   handleSubmit(event) {
-    const form = document.getElementById('form');
+    const form = document.getElementById('form')
     if (validateFile(form[1].value)) {
-      const formData = new FormData(form);
-      const postUrl = 'https://fantasy-football-api-1703.herokuapp.com/api/v1/salaries';
+      const formData = new FormData(form)
+      const postUrl = 'https://fantasy-football-api-1703.herokuapp.com/api/v1/salaries'
       
       axios.post(postUrl, formData)
         .then(data => console.log(data))
         .catch(error => console.log(error))
     }
-    event.preventDefault();
+    event.preventDefault()
   }
 
   render() {
@@ -39,19 +39,19 @@ class UploadForm extends Component {
 }
 
 const validateFile = (inputFile) => {
-  const extErrorMessage = "Only image file with extension: .csv is allowed";
-  const allowedExtension = "csv";
-  const extName = inputFile.split('.').pop();
-  let extError = false;
+  const extErrorMessage = "Only image file with extension: .csv is allowed"
+  const allowedExtension = "csv"
+  const extName = inputFile.split('.').pop()
+  let extError = false
 
-  if (extName !== allowedExtension) {extError = true;};
+  if (extName !== allowedExtension) {extError = true}
 
   if (extError) {
-    window.alert(extErrorMessage);
-    return false;
+    window.alert(extErrorMessage)
+    return false
   } else {
-    return true;
+    return true
   }
 }
 
-export default UploadForm;
+export default UploadForm

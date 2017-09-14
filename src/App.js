@@ -50,7 +50,7 @@ class App extends Component {
         </div>
         <section className="App-body">
           <div className="available">
-            {/* <UploadForm /> */}
+            <UploadForm />
             <h3>All Available Players</h3>
             <Table
               id="available-players"
