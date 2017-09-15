@@ -1,10 +1,9 @@
 import React, { Component } from 'react'
 import axios from 'axios'
-import './App.css'
+import './App.scss'
 
 import Table from './components/table.jsx'
 import UploadForm from './components/upload_form.jsx'
-// import Button from './components/gen_lineup.jsx'
 
 class App extends Component {
   constructor(props) {
@@ -209,35 +208,13 @@ class App extends Component {
   }
 
   // genLineupRecursivly() {
-  //   let quarterbacks = this.state.players.filter(player => player.position === "QB")
-  //                                        .sort((playerA, playerB) => {
-  //                                          return parseFloat(playerB.expected_point_production) - parseFloat(playerA.expected_point_production)
-  //                                        }).slice(0,5)
-
-  //   let runningbacks = this.state.players.filter(player => player.position === "RB")
-  //                                        .sort((playerA, playerB) => {
-  //                                          return parseFloat(playerB.expected_point_production) - parseFloat(playerA.expected_point_production)
-  //                                        }).slice(0,5)
-
-  //   let receivers = this.state.players.filter(player => player.position === "WR")
-  //                                     .sort((playerA, playerB) => {
-  //                                       return parseFloat(playerB.expected_point_production) - parseFloat(playerA.expected_point_production)
-  //                                     }).slice(0,5)
-
-  //   let tightends = this.state.players.filter(player => player.position === "TE")
-  //                                     .sort((playerA, playerB) => {
-  //                                       return parseFloat(playerB.expected_point_production) - parseFloat(playerA.expected_point_production)
-  //                                     }).slice(0,5)
-
-  //   let defenses = this.state.defenses.sort((defenseA, defenseB) => {
-  //                                       return parseFloat(defenseB.expected_point_production) - parseFloat(defenseA.expected_point_production)
-  //                                     }).slice(0,5)
-  //                                     .map(defense => {
-  //                                       defense.position = "DEF"
-  //                                       return defense
-  //                                     })
-
-  //   const all = quarterbacks.concat(runningbacks, receivers, tightends, defenses)                                      
+    // let quarterbacks = truncatePlayers(this.state.quarterbacks, "QB")
+    // let runningbacks = truncatePlayers(this.state.runningbacks, "RB")
+    // let receivers = truncatePlayers(this.state.receivers, "WR")
+    // let tightends = truncatePlayers(this.state.tightends, "TE")
+    // let defenses = this.state.defenses.sort((a,b) => {
+    //   return b.expected_point_production - a.expected_point_production
+    // }).slice(0,5)
 
   //   const maxLineupSpaces = {
   //     "QB": 1,
@@ -277,6 +254,10 @@ class App extends Component {
   //   //return lineup
   // }
 
+  // removePlayer(event) {
+  //   debugger
+  // }
+
   render() {
     return (
       <div className="App">
@@ -294,6 +275,7 @@ class App extends Component {
             <Table
               id="available-quarterbacks"
               players={this.state.quarterbacks}
+              onRemovePlayer={this.removePlayer}
             />
             <h3 className="table-header" id="header-runningbacks">All Available Runningbacks</h3>
             <Table

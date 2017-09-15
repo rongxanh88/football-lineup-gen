@@ -4,6 +4,17 @@ import TableHeader from './table_header'
 import PlayerRow from './player_row'
 
 class Table extends Component {
+  constructor(props) {
+    super(props)
+
+    // this.handleRow = this.handleRow.bind(this)
+  }
+
+  // handleRow(element) {
+  //   //inside table component
+  //   debugger
+  // }
+
   render() {
     return (
       <table className="lineup-table" id={this.props.id}>
@@ -21,6 +32,7 @@ class Table extends Component {
 const toPlayerRow = (player)  => {
   return (
     <PlayerRow key={player.id} data={player}/>
+    // <PlayerRow key={player.id} data={player} handleChange={this.handleRow} />
   )
 }
 

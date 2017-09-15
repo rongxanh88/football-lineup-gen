@@ -1,8 +1,8 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import './index.css'
-import './style/left-side.css'
-import './style/right-side.css'
+import './index.scss'
+import './style/left-side.scss'
+import './style/right-side.scss'
 import App from './App'
 import registerServiceWorker from './registerServiceWorker'
 
