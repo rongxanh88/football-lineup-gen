@@ -10,13 +10,17 @@ class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      players: [],
+      quarterbacks: [],
+      runningbacks: [],
+      receivers: [],
+      tightends: [],
       defenses: [],
       lineup: []
     }
     this.setAllPlayers = this.setAllPlayers.bind(this)
     this.setDefenses   = this.setDefenses.bind(this)
     this.genLineup     = this.genLineup.bind(this)
+    // this.genLineupRecursivly = this.genLineupRecursivly.bind(this)
   }
 
   componentDidMount() {
@@ -36,8 +40,10 @@ class App extends Component {
        const runningbacks = allData[1].runningbacks
        const receivers    = allData[2].receivers
        const tightends    = allData[3].tightends
-       const allPlayers   = quarterbacks.concat(runningbacks, receivers, tightends)
-       this.setAllPlayers(allPlayers)
+       this.setAllPlayers("QB", quarterbacks)
+       this.setAllPlayers("RB", runningbacks)
+       this.setAllPlayers("WR", receivers)
+       this.setAllPlayers("TE", tightends)
      })
   }
 
@@ -50,8 +56,23 @@ class App extends Component {
     this.setState({ defenses: defenses })
   }
 
-  setAllPlayers(allPlayers) {
-    this.setState({ players: allPlayers })
+  setAllPlayers(position, allPlayers) {
+    switch (position) {
+      case 'QB':
+        this.setState({ quarterbacks: allPlayers })
+        break
+      case 'RB':
+        this.setState({ runningbacks: allPlayers })
+        break
+      case 'WR':
+        this.setState({ receivers: allPlayers })
+        break
+      case 'TE':
+        this.setState({ tightends: allPlayers })
+        break
+      default:
+        console.log('Error, did not set state change for players')
+    }
   }
 
   genLineup() {
@@ -60,29 +81,13 @@ class App extends Component {
     let bestLineup = []
     let numberOfOperations = 0
 
-    let quarterbacks = this.state.players.filter(player => player.position === "QB")
-                                         .sort((playerA, playerB) => {
-                                           return parseFloat(playerB.expected_point_production) - parseFloat(playerA.expected_point_production)
-                                         }).slice(0,5)
-
-    let runningbacks = this.state.players.filter(player => player.position === "RB")
-                                         .sort((playerA, playerB) => {
-                                           return parseFloat(playerB.expected_point_production) - parseFloat(playerA.expected_point_production)
-                                         }).slice(0,5)
-
-    let receivers = this.state.players.filter(player => player.position === "WR")
-                                      .sort((playerA, playerB) => {
-                                        return parseFloat(playerB.expected_point_production) - parseFloat(playerA.expected_point_production)
-                                      }).slice(0,5)
-
-    let tightends = this.state.players.filter(player => player.position === "TE")
-                                      .sort((playerA, playerB) => {
-                                        return parseFloat(playerB.expected_point_production) - parseFloat(playerA.expected_point_production)
-                                      }).slice(0,5)
-
-    let defenses = this.state.defenses.sort((defenseA, defenseB) => {
-                                        return parseFloat(defenseB.expected_point_production) - parseFloat(defenseA.expected_point_production)
-                                      }).slice(0,5)
+    let quarterbacks = truncatePlayers(this.state.quarterbacks, "QB")
+    let runningbacks = truncatePlayers(this.state.runningbacks, "RB")
+    let receivers = truncatePlayers(this.state.receivers, "WR")
+    let tightends = truncatePlayers(this.state.tightends, "TE")
+    let defenses = this.state.defenses.sort((a,b) => {
+      return b.expected_point_production - a.expected_point_production
+    }).slice(0,5)
 
     quarterbacks.forEach(quarterback => {
       let pointTotal = 0
@@ -199,8 +204,78 @@ class App extends Component {
         })
       })
     })
+    console.log("number of operations: " + numberOfOperations)
     this.setState({lineup: bestLineup})
   }
+
+  // genLineupRecursivly() {
+  //   let quarterbacks = this.state.players.filter(player => player.position === "QB")
+  //                                        .sort((playerA, playerB) => {
+  //                                          return parseFloat(playerB.expected_point_production) - parseFloat(playerA.expected_point_production)
+  //                                        }).slice(0,5)
+
+  //   let runningbacks = this.state.players.filter(player => player.position === "RB")
+  //                                        .sort((playerA, playerB) => {
+  //                                          return parseFloat(playerB.expected_point_production) - parseFloat(playerA.expected_point_production)
+  //                                        }).slice(0,5)
+
+  //   let receivers = this.state.players.filter(player => player.position === "WR")
+  //                                     .sort((playerA, playerB) => {
+  //                                       return parseFloat(playerB.expected_point_production) - parseFloat(playerA.expected_point_production)
+  //                                     }).slice(0,5)
+
+  //   let tightends = this.state.players.filter(player => player.position === "TE")
+  //                                     .sort((playerA, playerB) => {
+  //                                       return parseFloat(playerB.expected_point_production) - parseFloat(playerA.expected_point_production)
+  //                                     }).slice(0,5)
+
+  //   let defenses = this.state.defenses.sort((defenseA, defenseB) => {
+  //                                       return parseFloat(defenseB.expected_point_production) - parseFloat(defenseA.expected_point_production)
+  //                                     }).slice(0,5)
+  //                                     .map(defense => {
+  //                                       defense.position = "DEF"
+  //                                       return defense
+  //                                     })
+
+  //   const all = quarterbacks.concat(runningbacks, receivers, tightends, defenses)                                      
+
+  //   const maxLineupSpaces = {
+  //     "QB": 1,
+  //     "RB": 2,
+  //     "WR": 4,
+  //     "TE": 1,
+  //     "DEF": 1
+  //   }
+
+  //   let currentPositionsFilled = {
+  //     "QB": 0,
+  //     "RB": 0,
+  //     "WR": 0,
+  //     "TE": 0,
+  //     "DEF": 0
+  //   }
+
+  //   const salaryCap = 50000
+  //   let lineup = []
+  //   let currentCost = 0
+  //   let maxPoints = 0
+  //   let currentPoints = 0
+
+  //   lineup = this.recurse(maxLineupSpaces, maxPoints, salaryCap, currentPositionsFilled, currentCost, currentPoints, all)
+  //   console.log(lineup)
+  // }
+
+  // recurse(maxLineupSpaces, maxPoints, salaryCap, currentPositionsFilled, currentCost, currentPoints, players) {
+  //   //base case
+  //   if (currentCost > salaryCap) {
+  //     return
+  //   }
+  //   //recurse here
+    
+  //   // recurse(maxLineupSpaces, maxPoints, salaryCap, )
+
+  //   //return lineup
+  // }
 
   render() {
     return (
@@ -215,12 +290,27 @@ class App extends Component {
         </div>
         <section className="App-body">
           <div className="available">
-            <h3 id="header-players">All Available Players</h3>
+            <h3 className="table-header" id="header-quarterbacks">All Available Quarterbacks</h3>
             <Table
-              id="available-players"
-              players={this.state.players}
+              id="available-quarterbacks"
+              players={this.state.quarterbacks}
             />
-            <h3 id="header-defenses">All Available Defenses</h3>
+            <h3 className="table-header" id="header-runningbacks">All Available Runningbacks</h3>
+            <Table
+              id="available-runningbacks"
+              players={this.state.runningbacks}
+            />
+            <h3 className="table-header" id="header-receivers">All Available Receivers</h3>
+            <Table
+              id="available-receivers"
+              players={this.state.receivers}
+            />
+            <h3 className="table-header" id="header-tightends">All Available Tightends</h3>
+            <Table
+              id="available-tightends"
+              players={this.state.tightends}
+            />
+            <h3 className="table-header" id="header-defenses">All Available Defenses</h3>
             <Table
               id="available-defenses"
               players={this.state.defenses}
@@ -247,6 +337,14 @@ const getPlayers = (position) => {
   return axios.get(baseURL + `/api/v1/${position}.json`)
     .then(response => response.data)
     .catch(error => console.log(error))
+}
+
+const truncatePlayers = (players, position) => {
+  return players.filter(player => player.position === position)
+                .sort((a,b) => {
+                  return parseFloat(b.expected_point_production) - parseFloat(a.expected_point_production)
+                })
+                .slice(0,5)
 }
 
 export default App;

@@ -1,0 +1,25 @@
+.Dynamic-Lineup {
+  display: flex;
+  flex-direction: column;
+  margin: 20px;
+  padding: 20px;
+}
+
+.upload-form {
+  margin: 20px;
+  border: 1px solid black;
+  order: 1;
+}
+
+#gen-button {
+  order: 2;
+}
+
+#header-gen-lineups {
+  order: 3;
+}
+
+#generated-lineup {
+  order:  4;
+  margin-right: 20px;
+}
