@@ -14,12 +14,18 @@ tbody {
 
 thead {
   display: flex;
+  color: #212121;
+}
+
+.player-detail {
+  width: 110px;
 }
 
 .lineup-table {
   padding: 10px;
   background-color: #C5C4C4;
-  color: #7C7C7C;
+  /* color: #7C7C7C; */
+  color: #BBDEFB;
   border: 3px solid black;
 }
 
@@ -28,9 +34,10 @@ thead {
   padding-bottom: 10px;
   background-color: white;
   color: grey;
-  border: 1px solid grey;
+  border: 1px solid #BDBDBD;
 }
 
 .table-header {
   text-align: center;
+  color: #212121;
 }

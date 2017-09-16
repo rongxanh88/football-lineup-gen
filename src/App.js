@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import axios from 'axios'
-import './App.scss'
+import './App.css'
 
 import Table from './components/table.jsx'
 import UploadForm from './components/upload_form.jsx'
