@@ -1,0 +1,50 @@
+.available {
+  display: flex;
+  flex-direction: column;
+  margin: 20px;
+  padding: 20px;
+}
+
+.player-table {
+  height: 30vh;
+}
+
+#header-quarterbacks {
+  order: 1;
+}
+
+#available-quarterbacks {
+  order: 2;
+}
+
+#header-runningbacks {
+  order: 3;
+}
+
+#available-runningbacks {
+  order: 4;
+}
+
+#header-receivers {
+  order: 5;
+}
+
+#available-receivers {
+  order: 6;
+}
+
+#header-tightends {
+  order: 7;
+}
+
+#available-tightends {
+  order: 8;
+}
+
+#header-defenses {
+  order: 9;
+}
+
+#available-defenses {
+  order: 10;
+}
