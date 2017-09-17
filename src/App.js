@@ -4,6 +4,7 @@ import './App.css'
 
 import Table from './components/table.jsx'
 import UploadForm from './components/upload_form.jsx'
+import WeatherModifer from './components/weather_modifer.jsx'
 
 class App extends Component {
   constructor(props) {
@@ -365,6 +366,7 @@ class App extends Component {
           </div>
           <div className="Dynamic-Lineup">
             <UploadForm />
+            <WeatherModifer />
             <button type="button" id="header-gen-lineups" onClick={this.genLineup}>Generate Lineup</button>
             <h3 id="header-gen-lineups">Generated Lineup</h3>
             <Table id="generated-lineup"

@@ -19,7 +19,7 @@ class Popup extends Component {
       return (
         <td className="weather" style={this.props.visibility}>
           Dome: {isDome} low: {low} high: {high} forecast: {forecast} Wind Chill: {wc} Wind Speed: {ws}
-          <img src={link} />
+          <img alt="weather_image" src={link} />
         </td>
       )
     } else {
