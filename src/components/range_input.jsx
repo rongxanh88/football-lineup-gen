@@ -12,11 +12,12 @@ class RangeInput extends Component {
   }
 
   render() {
+    const feature = this.props.weatherFeature
     return (
       <form onSubmit={this.handleSubmit}>
-        <label>{this.props.weatherFeature} Range</label><br/>
-        Lo: <input type="number" name={"lo-" + this.props.weatherFeature} />
-        Hi: <input type="number" name={"hi-" + this.props.weatherFeature} />
+        <label>{feature} Range</label><br/>
+        Lo: <input className="num-input" type="number" name={"lo-" + feature} />
+        Hi: <input className="num-input" type="number" name={"hi-" + feature} />
         <input type="submit" value="Set Ranges"/>
       </form>
     )

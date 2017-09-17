@@ -1,17 +1,21 @@
 import React, { Component } from 'react'
 import RangeInput from './range_input'
+import FeatureModifier from './modifier'
 
 class WeatherModifier extends Component {
   constructor(props) {
     super(props)
 
     this.rangeChange = this.rangeChange.bind(this)
+    this.changeModifiers = this.changeModifiers.bind(this)
 
     this.state = {
       lowTemp: 0,
       hiTemp: 0,
       lowWind: 0,
-      hiWind: 0
+      hiWind: 0,
+      tempModifier: 1.0,
+      windModifier: 1.0
     }
   }
 
@@ -33,6 +37,17 @@ class WeatherModifier extends Component {
     }
   }
 
+  changeModifiers(event) {
+    const feature = event.target.name
+    const modifier = parseFloat(event.target.value)
+
+    if (name === "Temperature") {
+      this.setState({tempModifier: modifier})
+    } else if (name === "WindSpeed") {
+      this.setState({windModifier: modifier})
+    }
+  }
+
   render() {
     return (
       <div>
@@ -48,6 +63,18 @@ class WeatherModifier extends Component {
           high={this.state.hiWind}
           handleRangeChange={this.rangeChange}
         />
+        <div>
+          <h6>Temperature Effect</h6>
+          <FeatureModifier
+            weatherFeature={"Temperature"}
+            modifierChange={this.changeModifiers}
+          />
+          <h6>Wind Speed Effect</h6>
+          <FeatureModifier
+            weatherFeature={"WindSpeed"}
+            modifierChange={this.changeModifiers}
+          />
+        </div>
       </div>
     )
   }

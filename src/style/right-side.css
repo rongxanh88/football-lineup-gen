@@ -6,13 +6,13 @@
 }
 
 .upload-form {
-  margin: 20px;
   border: 1px solid black;
   order: 1;
 }
 
 #gen-button {
   order: 2;
+  margin-top: 10px;
 }
 
 #header-gen-lineups {
@@ -22,4 +22,8 @@
 #generated-lineup {
   order:  4;
   margin-right: 20px;
+}
+
+input {
+  margin: 10px 5px 10px 5px;
 }
