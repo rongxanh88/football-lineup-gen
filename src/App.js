@@ -18,9 +18,10 @@ class App extends Component {
       weatherData: [],
       lineup: []
     }
-    this.setAllData     = this.setAllData.bind(this)
-    this.genLineup      = this.genLineup.bind(this)
-    this.removePlayer = this.removePlayer.bind(this)
+    this.setAllData        = this.setAllData.bind(this)
+    this.genLineup         = this.genLineup.bind(this)
+    this.removePlayer      = this.removePlayer.bind(this)
+    this.modifyPlayerStats = this.modifyPlayerStats.bind(this)
     // this.genLineupRecursivly = this.genLineupRecursivly.bind(this)
   }
 
@@ -130,6 +131,44 @@ class App extends Component {
         players = this.setState({defenses: filtered_players})
         break
     }
+  }
+
+  modifyPlayerStats(modifiers) {
+    let quarterbacks = this.state.quarterbacks
+    let runningbacks = this.state.runningbacks
+    let receivers    = this.state.receivers
+    let tightends    = this.state.tightends
+
+    quarterbacks = this.modifyPlayers(quarterbacks, modifiers)
+    runningbacks = this.modifyPlayers(runningbacks, modifiers)
+    receivers = this.modifyPlayers(receivers, modifiers)
+    tightends = this.modifyPlayers(tightends, modifiers)
+
+    this.setState({quarterbacks: quarterbacks})
+    this.setState({runningbacks: runningbacks})
+    this.setState({receivers: receivers})
+    this.setState({tightends: tightends})
+  }
+
+  modifyPlayers(players, modifiers) {
+    const weatherData = this.state.weatherData
+    return players.map(player => {
+      const weathers = weatherData.filter(weather => {
+        if (player.team === weather.awayTeam || player.team === weather.homeTeam) {
+          return weather
+        }
+      })
+      const weather = weathers[0]
+
+      if (weather.high <= modifiers.hiTemp && weather.high >= modifiers.lowTemp) {
+        player.expected_point_production = player.expected_point_production * modifiers.tempModifier
+      }
+      if (weather.windSpeed <= modifiers.hiWind && weather.windSpeed >= modifiers.lowWind) {
+        player.expected_point_production = player.expected_point_production * modifiers.windModifier
+      }
+      player.expected_point_production = Math.round(player.expected_point_production)
+      return player
+    })
   }
 
   genLineup() {
@@ -366,7 +405,7 @@ class App extends Component {
           </div>
           <div className="Dynamic-Lineup">
             <UploadForm />
-            <WeatherModifer />
+            <WeatherModifer modifyPlayerStats={this.modifyPlayerStats}/>
             <button type="button" id="header-gen-lineups" onClick={this.genLineup}>Generate Lineup</button>
             <h3 id="header-gen-lineups">Generated Lineup</h3>
             <Table id="generated-lineup"

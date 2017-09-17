@@ -6,8 +6,9 @@ class WeatherModifier extends Component {
   constructor(props) {
     super(props)
 
-    this.rangeChange = this.rangeChange.bind(this)
+    this.rangeChange     = this.rangeChange.bind(this)
     this.changeModifiers = this.changeModifiers.bind(this)
+    this.updatePlayers   = this.updatePlayers.bind(this)
 
     this.state = {
       lowTemp: 0,
@@ -41,11 +42,16 @@ class WeatherModifier extends Component {
     const feature = event.target.name
     const modifier = parseFloat(event.target.value)
 
-    if (name === "Temperature") {
+    if (feature === "Temperature") {
       this.setState({tempModifier: modifier})
-    } else if (name === "WindSpeed") {
+    } else if (feature === "WindSpeed") {
       this.setState({windModifier: modifier})
     }
+  }
+
+  updatePlayers() {
+    const modifiers = this.state
+    this.props.modifyPlayerStats(modifiers)
   }
 
   render() {
@@ -75,6 +81,7 @@ class WeatherModifier extends Component {
             modifierChange={this.changeModifiers}
           />
         </div>
+        <button type="button" onClick={this.updatePlayers}>Update</button>
       </div>
     )
   }
