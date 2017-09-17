@@ -28,6 +28,7 @@ class PlayerRow extends Component {
     } else {
       return (
         <tr className="player-row">
+          <td height="15" className="player-detail">{this.props.data.position}</td>
           <td height="15" className="player-detail">{this.props.data.name}</td>
           <td height="15" className="player-detail">{this.props.data.expected_point_production}</td>
           <td height="15" className="player-detail">{this.props.data.salary}</td>

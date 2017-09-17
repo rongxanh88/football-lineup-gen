@@ -80,7 +80,7 @@ class App extends Component {
   removePlayer(element) {
     const position = element.children[0].innerText
     const name = element.children[1].innerText
-
+    
     let players = []
     switch (position) {
       case 'QB':
@@ -100,9 +100,15 @@ class App extends Component {
         break
     }
     const filtered_players = players.filter(player => {
-      const full_name = player.first_name + ' ' + player.last_name
-      if (full_name !== name) {
-        return player
+      if (position !== 'DEF') {
+        const full_name = player.first_name + ' ' + player.last_name
+        if (full_name !== name) {
+          return player
+        }
+      } else {
+        if (player.name !== name) {
+          return player
+        }
       }
     })
     
