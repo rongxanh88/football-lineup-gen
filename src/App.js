@@ -14,60 +14,62 @@ class App extends Component {
       receivers: [],
       tightends: [],
       defenses: [],
+      weatherData: [],
       lineup: []
     }
-    this.setAllPlayers = this.setAllPlayers.bind(this)
-    this.setDefenses   = this.setDefenses.bind(this)
+    this.setAllData = this.setAllData.bind(this)
     this.genLineup     = this.genLineup.bind(this)
     // this.genLineupRecursivly = this.genLineupRecursivly.bind(this)
   }
 
   componentDidMount() {
-    this.getAllPlayers()
-    this.getDefenses()
+    this.getAllData()
   }
   
-  getAllPlayers() {
+  getAllData() {
     Promise.all([
-       getPlayers('quarterbacks'),
-       getPlayers('runningbacks'),
-       getPlayers('receivers'),
-       getPlayers('tightends')
+       getData('quarterbacks'),
+       getData('runningbacks'),
+       getData('receivers'),
+       getData('tightends'),
+       getData('defenses'),
+       getData('weather')
      ])
      .then((allData) => {
        const quarterbacks = allData[0].quarterbacks
        const runningbacks = allData[1].runningbacks
        const receivers    = allData[2].receivers
        const tightends    = allData[3].tightends
-       this.setAllPlayers("QB", quarterbacks)
-       this.setAllPlayers("RB", runningbacks)
-       this.setAllPlayers("WR", receivers)
-       this.setAllPlayers("TE", tightends)
+       const defenses     = allData[4].defenses
+       const weather_data = allData[5].weatherData
+       this.setAllData("QB", quarterbacks)
+       this.setAllData("RB", runningbacks)
+       this.setAllData("WR", receivers)
+       this.setAllData("TE", tightends)
+       this.setAllData("DEF", defenses)
+       this.setAllData("weather", weather_data)
      })
   }
 
-  getDefenses() {
-    getPlayers('defenses')
-      .then(data => this.setDefenses(data.defenses))
-  }
-
-  setDefenses(defenses) {
-    this.setState({ defenses: defenses })
-  }
-
-  setAllPlayers(position, allPlayers) {
-    switch (position) {
+  setAllData(endpoint, all) {
+    switch (endpoint) {
       case 'QB':
-        this.setState({ quarterbacks: allPlayers })
+        this.setState({ quarterbacks: all })
         break
       case 'RB':
-        this.setState({ runningbacks: allPlayers })
+        this.setState({ runningbacks: all })
         break
       case 'WR':
-        this.setState({ receivers: allPlayers })
+        this.setState({ receivers: all })
         break
       case 'TE':
-        this.setState({ tightends: allPlayers })
+        this.setState({ tightends: all })
+        break
+      case 'DEF':
+        this.setState({ defenses: all })
+        break
+      case 'weather':
+        this.setState({ weatherData: all })
         break
       default:
         console.log('Error, did not set state change for players')
@@ -315,8 +317,8 @@ class App extends Component {
 
 const baseURL = "https://fantasy-football-api-1703.herokuapp.com"
 
-const getPlayers = (position) => {
-  return axios.get(baseURL + `/api/v1/${position}.json`)
+const getData = (endpoint) => {
+  return axios.get(baseURL + `/api/v1/${endpoint}.json`)
     .then(response => response.data)
     .catch(error => console.log(error))
 }
