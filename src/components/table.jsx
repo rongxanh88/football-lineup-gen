@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 
 import TableHeader from './table_header'
 import PlayerRow from './player_row'

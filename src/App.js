@@ -333,24 +333,28 @@ class App extends Component {
               id="available-quarterbacks"
               players={this.state.quarterbacks}
               onRemovePlayer={this.removePlayer}
+              weatherData={this.state.weatherData}
             />
             <h3 className="table-header" id="header-runningbacks">All Available Runningbacks</h3>
             <Table
               id="available-runningbacks"
               players={this.state.runningbacks}
               onRemovePlayer={this.removePlayer}
+              weatherData={this.state.weatherData}
             />
             <h3 className="table-header" id="header-receivers">All Available Receivers</h3>
             <Table
               id="available-receivers"
               players={this.state.receivers}
               onRemovePlayer={this.removePlayer}
+              weatherData={this.state.weatherData}
             />
             <h3 className="table-header" id="header-tightends">All Available Tightends</h3>
             <Table
               id="available-tightends"
               players={this.state.tightends}
               onRemovePlayer={this.removePlayer}
+              weatherData={this.state.weatherData}
             />
             <h3 className="table-header" id="header-defenses">All Available Defenses</h3>
             <Table
