@@ -9,7 +9,7 @@ tbody {
   flex-direction: column;
   flex-wrap: nowrap;
   overflow-y: scroll;
-  height: 20vh;
+  height: 40vh;
 }
 
 thead {

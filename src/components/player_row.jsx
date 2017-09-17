@@ -8,14 +8,14 @@ class PlayerRow extends Component {
     this.findWeather = this.findWeather.bind(this)
     this.changeWeatherVisibility = this.changeWeatherVisibility.bind(this)
     this.state = {
-      weather: [],
+      weather: this.props.weatherData,
       visibility: {display: "none"}
     }
   }
 
-  componentDidMount() {
-    this.findWeather()
-  }
+  // componentDidMount() {
+  //   this.findWeather()
+  // }
 
   handleClick(event) {
     this.props.handleRow(event.target.parentElement.parentElement)
@@ -34,12 +34,11 @@ class PlayerRow extends Component {
   }
 
   changeWeatherVisibility() {
+    this.findWeather()
     if (this.state.visibility.display === 'none') {
       this.setState({visibility: {display: 'block'}})
-      console.log('visible')
     } else {
       this.setState({visibility: {display: 'none' }})
-      console.log('none')
     }
   }
 
