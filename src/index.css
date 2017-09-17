@@ -41,3 +41,8 @@ thead {
   text-align: center;
   color: #212121;
 }
+
+.weather {
+  font-size: 12px;
+  color: black;
+}

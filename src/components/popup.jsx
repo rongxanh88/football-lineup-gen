@@ -8,6 +8,7 @@ class Popup extends Component {
       const wc = this.props.weather.windChill
       const ws = this.props.weather.windSpeed
       const forecast = this.props.weather.forecast
+      const link = this.props.weather.imageLink
       let isDome = ''
 
       if (this.props.weather.isDome === "0") {
@@ -16,8 +17,9 @@ class Popup extends Component {
         isDome = "Yes"
       }
       return (
-        <td style={this.props.visibility}>
+        <td className="weather" style={this.props.visibility}>
           Dome: {isDome} low: {low} high: {high} forecast: {forecast} Wind Chill: {wc} Wind Speed: {ws}
+          <img src={link} />
         </td>
       )
     } else {

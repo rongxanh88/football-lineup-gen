@@ -13,10 +13,6 @@ class PlayerRow extends Component {
     }
   }
 
-  // componentDidMount() {
-  //   this.findWeather()
-  // }
-
   handleClick(event) {
     this.props.handleRow(event.target.parentElement.parentElement)
   }
