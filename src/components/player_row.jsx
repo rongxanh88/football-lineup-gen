@@ -4,13 +4,12 @@ class PlayerRow extends Component {
   constructor(props) {
     super(props)
 
-    // this.handleClick = this.handleClick.bind(this)
+    this.handleClick = this.handleClick.bind(this)
   }
 
-  // handleClick(event) {
-  //   debugger
-  //   this.props.handleChange(event.target.parentElement.parentElement)
-  // }
+  handleClick(event) {
+    this.props.handleRow(event.target.parentElement.parentElement)
+  }
 
   render() {
     if (this.props.data.name === undefined) {
@@ -21,9 +20,9 @@ class PlayerRow extends Component {
           <td height="15" className="player-detail">{fullName}</td>
           <td height="15" className="player-detail">{this.props.data.expected_point_production}</td>
           <td height="15" className="player-detail">{this.props.data.salary}</td>
-          {/* <td height="15" className="player-detail">
-            <button type="button" onClick={this.handleClick}>Remove Player</button>
-          </td> */}
+          <td height="15" className="player-detail">
+            <button type="button" onClick={this.handleClick}>Remove</button>
+          </td>
         </tr>
       )
     } else {
@@ -32,9 +31,9 @@ class PlayerRow extends Component {
           <td height="15" className="player-detail">{this.props.data.name}</td>
           <td height="15" className="player-detail">{this.props.data.expected_point_production}</td>
           <td height="15" className="player-detail">{this.props.data.salary}</td>
-          {/* <td height="15" className="player-detail">
-            <button type="button" onClick={this.handleClick}>Remove Player</button>
-          </td> */}
+          <td height="15" className="player-detail">
+            <button type="button" onClick={this.handleClick}>Remove</button>
+          </td>
       </tr>
       )
     }

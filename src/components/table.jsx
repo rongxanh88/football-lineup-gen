@@ -7,13 +7,13 @@ class Table extends Component {
   constructor(props) {
     super(props)
 
-    // this.handleRow = this.handleRow.bind(this)
+    this.toPlayerRow = this.toPlayerRow.bind(this)
+    this.handleRow = this.handleRow.bind(this)
   }
 
-  // handleRow(element) {
-  //   //inside table component
-  //   debugger
-  // }
+  handleRow(element) {
+    this.props.onRemovePlayer(element)
+  }
 
   render() {
     return (
@@ -22,18 +22,23 @@ class Table extends Component {
           <TableHeader />
         </thead>
         <tbody>
-          {this.props.players.map(toPlayerRow)}
+          {this.props.players.map(this.toPlayerRow)}
         </tbody>
       </table>
     )
   }
+
+  toPlayerRow(player) {
+    return (
+      <PlayerRow
+        key={player.id}
+        data={player}
+        weatherData={this.props.weatherData}
+        handleRow={this.handleRow}
+      />
+    )
+  }
 }
 
-const toPlayerRow = (player)  => {
-  return (
-    <PlayerRow key={player.id} data={player}/>
-    // <PlayerRow key={player.id} data={player} handleChange={this.handleRow} />
-  )
-}
 
 export default Table;

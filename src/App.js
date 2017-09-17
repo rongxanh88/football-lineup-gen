@@ -17,8 +17,9 @@ class App extends Component {
       weatherData: [],
       lineup: []
     }
-    this.setAllData = this.setAllData.bind(this)
-    this.genLineup     = this.genLineup.bind(this)
+    this.setAllData     = this.setAllData.bind(this)
+    this.genLineup      = this.genLineup.bind(this)
+    this.removePlayer = this.removePlayer.bind(this)
     // this.genLineupRecursivly = this.genLineupRecursivly.bind(this)
   }
 
@@ -73,6 +74,54 @@ class App extends Component {
         break
       default:
         console.log('Error, did not set state change for players')
+    }
+  }
+
+  removePlayer(element) {
+    const position = element.children[0].innerText
+    const name = element.children[1].innerText
+
+    let players = []
+    switch (position) {
+      case 'QB':
+        players = this.state.quarterbacks
+        break
+      case 'RB':
+        players = this.state.runningbacks
+        break
+      case 'WR':
+        players = this.state.receivers
+        break
+      case 'TE':
+        players = this.state.tightends
+        break
+      case 'DEF':
+        players = this.state.defenses
+        break
+    }
+    const filtered_players = players.filter(player => {
+      const full_name = player.first_name + ' ' + player.last_name
+      if (full_name !== name) {
+        return player
+      }
+    })
+    
+    switch (position) {
+      case 'QB':
+        players = this.setState({quarterbacks: filtered_players})
+        break
+      case 'RB':
+        players = this.setState({runningbacks: filtered_players})
+        break
+      case 'WR':
+        players = this.setState({receivers: filtered_players})
+        break
+      case 'TE':
+        players = this.setState({tightends: filtered_players})
+        break
+      case 'DEF':
+        players = this.setState({defenses: filtered_players})
+        break
     }
   }
 
@@ -283,30 +332,34 @@ class App extends Component {
             <Table
               id="available-runningbacks"
               players={this.state.runningbacks}
+              onRemovePlayer={this.removePlayer}
             />
             <h3 className="table-header" id="header-receivers">All Available Receivers</h3>
             <Table
               id="available-receivers"
               players={this.state.receivers}
+              onRemovePlayer={this.removePlayer}
             />
             <h3 className="table-header" id="header-tightends">All Available Tightends</h3>
             <Table
               id="available-tightends"
               players={this.state.tightends}
+              onRemovePlayer={this.removePlayer}
             />
             <h3 className="table-header" id="header-defenses">All Available Defenses</h3>
             <Table
               id="available-defenses"
               players={this.state.defenses}
+              onRemovePlayer={this.removePlayer}
             />
           </div>
           <div className="Dynamic-Lineup">
             <UploadForm />
             <button type="button" id="header-gen-lineups" onClick={this.genLineup}>Generate Lineup</button>
-            {/* <Button id="gen-button" text="Generate Lineup" /> */}
             <h3 id="header-gen-lineups">Generated Lineup</h3>
             <Table id="generated-lineup"
             players={this.state.lineup}
+            weatherData={this.state.weatherData}
             />
           </div>
         </section>
