@@ -5,8 +5,9 @@ The algorhythym for generating the lineup is a current work in progress and curr
 app then calculates all lineup permutations and returns a lineup. The API currently restricts players who are injured, suspended, or on bye week. The API also restricts players who have already
 played in the current week.
 
-The generator also allows the user to upload the latest salary data via CSV from Draft Kings. Please upload the new salary data every week before using the generator. Lastly, you can apply a primitive
-multiplier to player stats depending on temperature and wind conditions. This is still a work in progress.
+The generator also allows the user to upload the latest salary data via CSV from Draft Kings. Please upload the new salary data every week before using the generator.
+
+Lastly, you can apply a primitive multiplier to player stats depending on temperature and wind conditions. Just set the ranges for which temperature and wind speeds which can have an effect. Also, there are four settings which apply a different level of multiplier to the players. This is still a work in progress.
 
 ## Getting Started
 
