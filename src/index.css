@@ -9,7 +9,7 @@ tbody {
   flex-direction: column;
   flex-wrap: nowrap;
   overflow-y: scroll;
-  height: 20vh;
+  height: 40vh;
 }
 
 thead {
@@ -24,7 +24,6 @@ thead {
 .lineup-table {
   padding: 10px;
   background-color: #C5C4C4;
-  /* color: #7C7C7C; */
   color: #BBDEFB;
   border: 3px solid black;
 }
@@ -40,4 +39,9 @@ thead {
 .table-header {
   text-align: center;
   color: #212121;
+}
+
+.weather {
+  font-size: 12px;
+  color: black;
 }

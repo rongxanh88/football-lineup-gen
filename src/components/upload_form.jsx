@@ -34,7 +34,7 @@ class UploadForm extends Component {
         <input type="file" name="salaryData" id="fileToUpload" value={this.state.value} onChange={this.handleChange} />
         <input type="submit" value="Upload File"/>
       </form>
-    );
+    )
   }
 }
 
