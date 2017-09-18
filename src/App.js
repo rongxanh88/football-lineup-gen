@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import axios from 'axios'
+import getData from './services/fantasy_football_service'
 import './App.css'
 
 import Table from './components/table.jsx'
@@ -104,13 +104,9 @@ class App extends Component {
     const filtered_players = players.filter(player => {
       if (position !== 'DEF') {
         const full_name = player.first_name + ' ' + player.last_name
-        if (full_name !== name) {
-          return player
-        }
+        if (full_name !== name) return player
       } else {
-        if (player.name !== name) {
-          return player
-        }
+        if (player.name !== name) return player
       }
     })
     
@@ -160,13 +156,12 @@ class App extends Component {
       })
       const weather = weathers[0]
 
-      if (weather.high <= modifiers.hiTemp && weather.high >= modifiers.lowTemp) {
-        player.expected_point_production = player.expected_point_production * modifiers.tempModifier
+      if (parseInt(weather.high) < modifiers.hiTemp && parseInt(weather.high) > modifiers.lowTemp) {
+        player.expected_point_production = (player.expected_point_production * modifiers.tempModifier).toFixed(2)
       }
-      if (weather.windSpeed <= modifiers.hiWind && weather.windSpeed >= modifiers.lowWind) {
-        player.expected_point_production = player.expected_point_production * modifiers.windModifier
+      if (parseInt(weather.windSpeed) < modifiers.hiWind && parseInt(weather.windSpeed) > modifiers.lowWind) {
+        player.expected_point_production = (player.expected_point_production * modifiers.windModifier).toFixed(2)
       }
-      player.expected_point_production = Math.round(player.expected_point_production)
       return player
     })
   }
@@ -406,7 +401,8 @@ class App extends Component {
           <div className="Dynamic-Lineup">
             <UploadForm />
             <WeatherModifer modifyPlayerStats={this.modifyPlayerStats}/>
-            <button type="button" id="header-gen-lineups" onClick={this.genLineup}>Generate Lineup</button>
+            {/* <button type="button" className="button" onClick={this.componentDidMount.bind(this)}>Reset</button> */}
+            <button type="button" className="button" id="header-gen-lineups" onClick={this.genLineup}>Generate Lineup</button>
             <h3 id="header-gen-lineups">Generated Lineup</h3>
             <Table id="generated-lineup"
             players={this.state.lineup}
@@ -417,14 +413,6 @@ class App extends Component {
       </div>
     );
   }
-}
-
-const baseURL = "https://fantasy-football-api-1703.herokuapp.com"
-
-const getData = (endpoint) => {
-  return axios.get(baseURL + `/api/v1/${endpoint}.json`)
-    .then(response => response.data)
-    .catch(error => console.log(error))
 }
 
 const truncatePlayers = (players, position) => {

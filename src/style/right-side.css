@@ -27,3 +27,9 @@
 input {
   margin: 10px 5px 10px 5px;
 }
+
+.button {
+  width: 25%;
+  margin: 10px 0px 10px 0px;
+  align-self: center;
+}

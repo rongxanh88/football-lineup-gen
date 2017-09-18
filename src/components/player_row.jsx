@@ -21,9 +21,7 @@ class PlayerRow extends Component {
     const team = this.props.data.team
     const weatherData = this.props.weatherData || []
     const weathers = weatherData.filter(data => {
-      if (data.awayTeam === team || data.homeTeam === team) {
-        return data
-      }
+      if (data.awayTeam === team || data.homeTeam === team) return data
     })
     const weather = weathers[0]
     this.setState({weather: weather})

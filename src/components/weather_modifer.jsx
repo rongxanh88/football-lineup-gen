@@ -81,7 +81,7 @@ class WeatherModifier extends Component {
             modifierChange={this.changeModifiers}
           />
         </div>
-        <button type="button" onClick={this.updatePlayers}>Update</button>
+        <button type="button" class="button" onClick={this.updatePlayers}>Update</button>
       </div>
     )
   }
