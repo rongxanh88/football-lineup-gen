@@ -1,14 +1,16 @@
 # Daily Lineup Generator
 
-TODO - Description
+Fantasy Football Lineup Generator for Draft Kings Lineup. The generator currently makes all calls to my API, which you can find the repo [here](https://github.com/rongxanh88/fantasy_football).
+The algorhythym for generating the lineup is a current work in progress and currently sorts all the positions by point production, and truncates the data set to five players per position. The
+app then calculates all lineup permutations and returns a lineup. The API currently restricts players who are injured, suspended, or on bye week. The API also restricts players who have already
+played in the current week.
+
+The generator also allows the user to upload the latest salary data via CSV from Draft Kings. Please upload the new salary data every week before using the generator. Lastly, you can apply a primitive
+multiplier to player stats depending on temperature and wind conditions. This is still a work in progress.
 
 ## Getting Started
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
-
-### Prerequisites
-
-Currently no prerequesites.
+Please see install instructions. Also, go to Draftkings and download a CSV of their current lineup data for the week.
 
 ### Installing
 

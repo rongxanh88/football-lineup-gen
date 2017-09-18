@@ -399,6 +399,7 @@ class App extends Component {
             />
           </div>
           <div className="Dynamic-Lineup">
+            <h4>Click on any row to expand weather data!</h4>
             <UploadForm />
             <WeatherModifer modifyPlayerStats={this.modifyPlayerStats}/>
             {/* <button type="button" className="button" onClick={this.componentDidMount.bind(this)}>Reset</button> */}
